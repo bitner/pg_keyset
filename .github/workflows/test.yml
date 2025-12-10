@@ -64,8 +64,12 @@ jobs:
 
     - name: Initialize pgrx
       run: |
-        cargo pgrx init
+        export PGRX_HOME=/home/runner/.pgrx
+        cargo pgrx init || true
+        mkdir -p $PGRX_HOME
         ls -la $PGRX_HOME
 
     - name: Run tests
-      run: cargo pgrx test pg${{ matrix.pg_version }} --no-default-features
+      run: |
+        export PGRX_HOME=/home/runner/.pgrx
+        cargo pgrx test pg${{ matrix.pg_version }} --no-default-features
