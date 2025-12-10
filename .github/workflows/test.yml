@@ -81,7 +81,7 @@ jobs:
 
     - name: Initialize pgrx
       run: |
-        cargo pgrx init --pg${{ matrix.pg_version }}
+        cargo pgrx init --pg${{ matrix.pg_version }} download
         ls -la $PGRX_HOME
 
     - name: Run tests
