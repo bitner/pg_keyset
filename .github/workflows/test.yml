@@ -70,5 +70,4 @@ jobs:
 
     - name: Run tests
       run: |
-        export PGRX_HOME=/home/runner/.pgrx
         cargo pgrx test pg${{ matrix.pg_version }} --no-default-features
