@@ -1,0 +1,6 @@
+comment = 'pg_keyset:  Created by pgrx'
+default_version = '@CARGO_VERSION@'
+module_pathname = '$libdir/pg_keyset'
+relocatable = false
+superuser = true
+trusted = false

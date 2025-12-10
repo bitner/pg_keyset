@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-deb:
+    name: Build Deb for PG ${{ matrix.pg_version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pg_version: [15, 16, 17, 18]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build Deb
+      run: |
+        # Run the build script inside the postgres container
+        # We run as root to install dependencies
+        docker run --rm --user root -v $PWD:/app -w /app postgres:${{ matrix.pg_version }} ./scripts/build_deb.sh ${{ matrix.pg_version }}
+
+    - name: Upload Deb
+      uses: actions/upload-artifact@v3
+      with:
+        name: pg_keyset_pg${{ matrix.pg_version }}_deb
+        path: pg_keyset_pg${{ matrix.pg_version }}_*.deb
+
+  publish-pgxn:
+    name: Publish to PGXN
+    runs-on: ubuntu-latest
+    needs: build-deb
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Create Source Zip
+      run: git archive --format=zip --output=pg_keyset.zip HEAD
+
+    - name: Upload Source Zip
+      uses: actions/upload-artifact@v3
+      with:
+        name: pg_keyset_source
+        path: pg_keyset.zip
+
+    - name: Release Info
+      run: echo "Artifacts created. To publish to PGXN, upload the source zip."

@@ -1,0 +1,33 @@
+{
+   "name": "pg_keyset",
+   "abstract": "A PostgreSQL extension for keyset pagination.",
+   "version": "0.0.0",
+   "maintainer": "David Bitner <bitner@dbspatial.com>",
+   "license": "mit",
+   "provides": {
+      "pg_keyset": {
+         "abstract": "A PostgreSQL extension for keyset pagination.",
+         "file": "src/lib.rs",
+         "docfile": "README.md",
+         "version": "0.0.0"
+      }
+   },
+   "prereqs": {
+      "runtime": {
+         "requires": {
+            "PostgreSQL": "15.0.0"
+         }
+      }
+   },
+   "resources": {
+      "bugtracker": {
+         "web": "http://github.com/bitner/pg_keyset/issues"
+      },
+      "repository": {
+         "url": "git://github.com/bitner/pg_keyset.git",
+         "web": "http://github.com/bitner/pg_keyset",
+         "type": "git"
+      }
+   },
+   "generated_by": "Manual"
+}
