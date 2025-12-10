@@ -9,6 +9,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  PGRX_HOME: ${{ github.workspace }}/.pgrx
 
 jobs:
   lint:
@@ -65,8 +66,7 @@ jobs:
     - name: Initialize pgrx
       run: |
         cargo pgrx init
-        echo "Listing ~/.pgrx:"
-        ls -la ~/.pgrx || echo "~/.pgrx not found"
+        ls -la $PGRX_HOME
 
     - name: Run tests
       run: |
