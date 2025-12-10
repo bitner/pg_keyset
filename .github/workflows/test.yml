@@ -35,13 +35,13 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y libclang-dev libssl-dev pkg-config build-essential readline-common zlib1g-dev
+        sudo apt-get install -y libclang-dev libssl-dev pkg-config build-essential libreadline-dev zlib1g-dev flex bison
 
     - name: Install cargo-pgrx
       run: cargo install cargo-pgrx --version 0.16.1 --locked
 
     - name: Initialize pgrx
-      run: cargo pgrx init
+      run: cargo pgrx init --pg18
 
     - name: Check formatting
       run: cargo fmt --check
@@ -74,14 +74,14 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y libclang-dev libssl-dev pkg-config build-essential readline-common zlib1g-dev
+        sudo apt-get install -y libclang-dev libssl-dev pkg-config build-essential libreadline-dev zlib1g-dev flex bison
 
     - name: Install cargo-pgrx
       run: cargo install cargo-pgrx --version 0.16.1 --locked
 
     - name: Initialize pgrx
       run: |
-        cargo pgrx init
+        cargo pgrx init --pg${{ matrix.pg_version }}
         ls -la $PGRX_HOME
 
     - name: Run tests
