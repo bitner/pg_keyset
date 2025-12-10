@@ -8,16 +8,17 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  PGRX_HOME: /home/runner/.pgrx
 
 jobs:
   lint:
     name: Formatting & Clippy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Cache cargo registry
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/registry
@@ -44,10 +45,10 @@ jobs:
       matrix:
         pg_version: [15, 16, 17, 18]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Cache cargo registry
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/registry
@@ -62,7 +63,9 @@ jobs:
       run: cargo install cargo-pgrx --version 0.16.1 --locked
 
     - name: Initialize pgrx
-      run: cargo pgrx init
+      run: |
+        cargo pgrx init
+        ls -la $PGRX_HOME
 
     - name: Run tests
       run: cargo pgrx test pg${{ matrix.pg_version }} --no-default-features
