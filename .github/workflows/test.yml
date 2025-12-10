@@ -32,6 +32,17 @@ jobs:
       with:
         components: clippy, rustfmt
 
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libclang-dev libssl-dev pkg-config build-essential readline-common zlib1g-dev
+
+    - name: Install cargo-pgrx
+      run: cargo install cargo-pgrx --version 0.16.1 --locked
+
+    - name: Initialize pgrx
+      run: cargo pgrx init
+
     - name: Check formatting
       run: cargo fmt --check
 
@@ -59,6 +70,11 @@ jobs:
 
     - name: Install Rust
       uses: dtolnay/rust-toolchain@stable
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libclang-dev libssl-dev pkg-config build-essential readline-common zlib1g-dev
 
     - name: Install cargo-pgrx
       run: cargo install cargo-pgrx --version 0.16.1 --locked
