@@ -41,7 +41,7 @@ jobs:
       run: cargo install cargo-pgrx --version 0.16.1 --locked
 
     - name: Initialize pgrx
-      run: cargo pgrx init --pg18
+      run: cargo pgrx init --pg18 download
 
     - name: Check formatting
       run: cargo fmt --check
@@ -49,13 +49,17 @@ jobs:
     - name: Run clippy
       run: cargo clippy --no-default-features --features pg18 -- -D warnings
 
+    - name: Run tests
+      run: |
+        cargo pgrx test pg18 --no-default-features
+
   test:
     name: Test PG ${{ matrix.pg_version }}
     needs: lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        pg_version: [15, 16, 17, 18]
+        pg_version: [15, 16, 17]
     steps:
     - uses: actions/checkout@v4
 
