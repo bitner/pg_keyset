@@ -5,10 +5,10 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_call:
 
 env:
   CARGO_TERM_COLOR: always
-  PGRX_HOME: /home/runner/.pgrx
 
 jobs:
   lint:
@@ -64,10 +64,9 @@ jobs:
 
     - name: Initialize pgrx
       run: |
-        export PGRX_HOME=/home/runner/.pgrx
-        cargo pgrx init || true
-        mkdir -p $PGRX_HOME
-        ls -la $PGRX_HOME
+        cargo pgrx init
+        echo "Listing ~/.pgrx:"
+        ls -la ~/.pgrx || echo "~/.pgrx not found"
 
     - name: Run tests
       run: |

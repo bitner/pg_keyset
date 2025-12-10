@@ -4,12 +4,15 @@ on:
   push:
     tags:
       - 'v*'
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
   build-deb:
     name: Build Deb for PG ${{ matrix.pg_version }}
+    needs: test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -23,6 +26,11 @@ jobs:
         # Run the build script inside the postgres container
         # We run as root to install dependencies
         docker run --rm --user root -v $PWD:/app -w /app postgres:${{ matrix.pg_version }} ./scripts/build_deb.sh ${{ matrix.pg_version }}
+        # Fix permissions so upload-artifact can read the files
+        sudo chown -R $USER:$USER .
+
+    - name: List files
+      run: ls -la *.deb
 
     - name: Upload Deb
       uses: actions/upload-artifact@v4
