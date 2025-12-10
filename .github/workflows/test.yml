@@ -34,7 +34,7 @@ jobs:
       run: cargo fmt --check
 
     - name: Run clippy
-      run: cargo clippy --all-features -- -D warnings
+      run: cargo clippy --no-default-features --features pg18 -- -D warnings
 
   test:
     name: Test PG ${{ matrix.pg_version }}
