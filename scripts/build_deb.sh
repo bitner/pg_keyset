@@ -32,7 +32,7 @@ cargo pgrx init --pg${PG_VERSION}=/usr/bin/pg_config
 
 # Package
 # This creates artifacts in target/release/pg_keyset-pg${PG_VERSION}/
-cargo pgrx package --pg-config /usr/bin/pg_config
+cargo pgrx package --pg-config /usr/bin/pg_config --no-default-features
 
 # Prepare deb directory
 DEB_DIR="deb_dist"
